@@ -35,7 +35,12 @@ public class IntroductionBase {
     public Flux<String> fortuneTop5() {
         return Flux.defer(() -> {
             fortuneTop5ServiceIsCalled.set(true);
-            return Flux.just("Walmart", "Amazon", "Apple", "CVS Health", "UnitedHealth Group");
+//            return Flux.just("Walmart", "Amazon", "Apple", "CVS Health", "UnitedHealth Group");
+            return Flux.create(sink -> {
+                sink.next("Walmart");
+                sink.next("Amazon");
+                sink.error(new RuntimeException());
+            });
         });
     }
 
